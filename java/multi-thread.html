@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>java多线程 | the site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="调用run方法和调用start方法的区别 调用start的方法会创建一个新的线程, 然后os会调用run方法 调用run方法只是普通的调用方法, 并不会创建一个新的线程  线程的执行顺序线程的执行顺序与调用start的位置无关, 只和os的调度有关 12345678910111213141516171819202122public class TestMyThread &#123;    publ">
+<meta property="og:type" content="website">
+<meta property="og:title" content="java多线程">
+<meta property="og:url" content="https://blog.yuanzhou.site/java/multi-thread.html">
+<meta property="og:site_name" content="the site">
+<meta property="og:description" content="调用run方法和调用start方法的区别 调用start的方法会创建一个新的线程, 然后os会调用run方法 调用run方法只是普通的调用方法, 并不会创建一个新的线程  线程的执行顺序线程的执行顺序与调用start的位置无关, 只和os的调度有关 12345678910111213141516171819202122public class TestMyThread &#123;    publ">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241220111452269.png">
+<meta property="article:published_time" content="2024-12-20T03:02:54.000Z">
+<meta property="article:modified_time" content="2024-12-20T07:17:39.733Z">
+<meta property="article:author" content="doomer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241220111452269.png">
+  
+    <link rel="alternate" href="/atom.xml" title="the site" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">the site</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.yuanzhou.site"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/java/multi-thread.html" class="article-date">
+  <time class="dt-published" datetime="2024-12-20T03:02:54.000Z" itemprop="datePublished">2024-12-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      java多线程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="调用run方法和调用start方法的区别"><a href="#调用run方法和调用start方法的区别" class="headerlink" title="调用run方法和调用start方法的区别"></a>调用run方法和调用start方法的区别</h3><ol>
+<li>调用start的方法会创建一个新的线程, 然后os会调用run方法</li>
+<li>调用run方法只是普通的调用方法, 并不会创建一个新的线程</li>
+</ol>
+<h3 id="线程的执行顺序"><a href="#线程的执行顺序" class="headerlink" title="线程的执行顺序"></a>线程的执行顺序</h3><p>线程的执行顺序与调用start的位置无关, 只和os的调度有关</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestMyThread</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="type">MyThread</span> <span class="variable">myThread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyThread</span>(i);</span><br><span class="line">            myThread.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyThread</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.i = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241220111452269.png" alt="image-20241220111452269"></p>
+<h3 id="使用带返回值的多线程"><a href="#使用带返回值的多线程" class="headerlink" title="使用带返回值的多线程"></a>使用带返回值的多线程</h3><p>可以通过实现Callable接口实现带返回值的多线程, <strong>注意java中启动线程最终都要回到Thread类的start方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallableDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 搭桥创建线程</span></span><br><span class="line">        <span class="type">MyCallable</span> <span class="variable">myCallable</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyCallable</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> <span class="title class_">FutureTask</span>&lt;&gt;(myCallable);</span><br><span class="line"></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(futureTask);</span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(futureTask.get());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyCallable</span> <span class="keyword">implements</span> <span class="title class_">Callable</span>&lt;Integer&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyCallable</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.i = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">call</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多线程的异常"><a href="#多线程的异常" class="headerlink" title="多线程的异常"></a>多线程的异常</h3><p>线程之间共享堆区, 不共享栈区, 目的是多线程之间处理任务不相互影响, 单个线程发生异常时不影响其他线程.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            System.out.println(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    thread.start();</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">thread1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">            System.out.println(<span class="number">2</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    thread1.start();</span><br><span class="line">    Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    System.out.println(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出3所需时间, 至少三秒</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.yuanzhou.site/java/multi-thread.html" data-id="cm4wfch0c00007soxe1i8h3r6" data-title="java多线程" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/12/20/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 doomer<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
