@@ -3,7 +3,7 @@ name: Hexo Deploy
 on:
   push:
     branches:
-      - hexo  # 设置为你的Hexo源码所在的分支
+      - main  # 设置为你的Hexo源码所在的分支
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        submodules: true  # 如果使用子模块，请启用
+        submodules: false  # 如果使用子模块，请启用
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
