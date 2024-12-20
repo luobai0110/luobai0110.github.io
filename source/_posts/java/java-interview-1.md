@@ -1,6 +1,11 @@
 ---
 title: java基础面试一
 date: 2024-12-17 21:09:22
+category: 
+  - java
+tag: 
+  - java
+  - 面试
 ---
 
 ## **String相关**
