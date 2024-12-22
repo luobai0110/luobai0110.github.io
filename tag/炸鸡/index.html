@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="the site">
-<meta property="og:url" content="https://blog.yuanzhou.site/tag/cs/index.html">
+<meta property="og:url" content="https://blog.yuanzhou.site/tag/%E7%82%B8%E9%B8%A1/index.html">
 <meta property="og:site_name" content="the site">
 <meta property="og:locale">
 <meta property="article:author" content="doomer">
@@ -399,45 +399,36 @@
                 <main class="main index-page">
             
         <article class="index-post">
-            <a class="abstract-title" href="/2024/12/20/cs/design-pattern/">
-                <span class="abstract-title-text">设计模式</span>
+            <a class="abstract-title" href="/2024/12/22/linux/linux-command/">
+                <span class="abstract-title-text">linux命令杂记</span>
             </a>
             <div class="abstract-content">
-                设计模式
-装饰器模式
-装饰器模式是什么: 灵活增强类的一个方法
-为什么使用装饰器模式:
-可以在不修改要增强的类的基础上灵活增强一个类的功能, 是可插拔的
-如何实现:
+                添加用户到组
+1sudo usermod -aG &lt;groupname&gt; &lt;username&gt;
 
-被装饰类与装饰器类应当具备相同的父类;
-装饰器类组合父类
-给装饰器类提供有参构造器, 构造器是组合的父类属性
-重写父类方法
+a: 表示追加, 不会覆盖用户原有的组
+G: 指定组名
 
-父类:
-1
-单例设计模式(Singleton)
-目的
-保证一个类在进程中有且只有一个实例
-关键步骤
-
-构造器私有化, 无法从外部创建对象
-提供一个静态的该类成员变量, 确保该类的实例在内存中只存在一份
-提供一个静态的方法获取静态实例
-
-实现方法
-1. ...
+示例
+1sudo usermod -aG docker doomer
+配置使用newgrp命令可以不重新登录
+1sudo newgrp docker
+可以使用groups &lt;username&gt;或者id &lt;username&gt;
+验证是否加入成功
+1groups doomer
+输出
+1doomer : doomer cdrom floppy audio dip vi...
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">
                 <!-- date -->
                 <div class="abstract-date" title="Last updated: 2024/12/22">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/12/20</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/12/22</span>
                 </div>
                 <!-- tags -->
                     <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="cs">cs</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="炸鸡">炸鸡</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="linux">linux</a>
 </div>
 
             </div>
