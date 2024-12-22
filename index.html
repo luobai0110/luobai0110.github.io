@@ -530,24 +530,24 @@ java的多线程
 为什么数组的索引通常从0开始
 因为索引实际上表示偏移量,
 从0开始能够很好的反应数组元素和数组第一个元素的偏移量
-ASCII码表
-
-
-img
-
-
-
-img
-
 补码, 原码, 补码
-UUID生成方式
-12// 根据时间戳生成String id = UUID.randomUUID().toString();
 
+原码: 实数的二进制表示,
+规则: 第一位表示符号, 正数的符号为0,
+负数的符号为1
+优点: 简单易读, 符合人类直觉
+缺点: 对负数在计算机内的表达不友好
+反码:
+解决如何在计算机中有效地表示和处理负数，特别是避免在二进制加法运算中出现额外的复杂性.
+规则: 正数的反码是其本身; 负数的反码是除符号位取反,
+这种编码模式下0有两种表示
+0反码的两种表示, 以八位示例
+123456正数0: 	原码: 0000...
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">
                 <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/12/20">
+                <div class="abstract-date" title="Last updated: 2024/12/22">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/12/20</span>
                 </div>
                 <!-- tags -->
@@ -711,16 +711,19 @@ UUID生成方式
             <span class="archive-post-date">12/18</span>
             <a class="archive-post-title" href="/2024/12/18/algorithm/simple-sort/">简单排序算法</a>
         </li>
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/17</span>
-            <a class="archive-post-title" href="/2024/12/17/java/java-interview-1/">java基础面试一</a>
-        </li>
                 </ul>
             <div class="archive-year"> Invalid date </div>
             <ul class="year-list">
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span>
             <a class="archive-post-title" href="/2024/12/22/linux/linux-command/">[Untitled Post]</a>
+        </li>
+                </ul>
+            <div class="archive-year"> 2024 </div>
+            <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/17</span>
+            <a class="archive-post-title" href="/2024/12/17/java/java-interview-1/">java基础面试一</a>
         </li>
             </ul>
     </div>
