@@ -10,31 +10,19 @@
     <meta name="copyright" content="doomer">
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     <meta name="description" content="">
-    <meta name="description" content="String相关为什么不建议的循环中使用+拼接字符串+的内部实现原理使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串 实现如下： 1str &#x3D; new StringBuilder(str).append(&quot;text&quot;).toString();  如果在循环中使用则会在每次循环中创建StringBuilder对象, 造成性能和内存的">
+    <meta name="description" content="String相关 为什么不建议的循环中使用+拼接字符串 +的内部实现原理 使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串 实现如下： 1str &#x3D; new StringBuilder(str).append(&quot;text&quot;).toString(); 如果在循环中使用则会在每次循环中创建StringBuilder对象,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java基础面试一">
 <meta property="og:url" content="https://blog.yuanzhou.site/2024/12/17/java/java-interview-1/index.html">
 <meta property="og:site_name" content="the site">
-<meta property="og:description" content="String相关为什么不建议的循环中使用+拼接字符串+的内部实现原理使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串 实现如下： 1str &#x3D; new StringBuilder(str).append(&quot;text&quot;).toString();  如果在循环中使用则会在每次循环中创建StringBuilder对象, 造成性能和内存的">
+<meta property="og:description" content="String相关 为什么不建议的循环中使用+拼接字符串 +的内部实现原理 使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串 实现如下： 1str &#x3D; new StringBuilder(str).append(&quot;text&quot;).toString(); 如果在循环中使用则会在每次循环中创建StringBuilder对象,">
 <meta property="og:locale">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201809924.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201650175.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206205550646.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208154551284.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208155114707.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208160255652.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208150145484.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208145738908.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/0ffabbf8654d67bbc092417c98a772b.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/dabe5c9b66df0ab5e0182ad0dca4e03.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241217204404282.png">
 <meta property="article:published_time" content="2024-12-17T13:09:22.000Z">
 <meta property="article:modified_time" content="2024-12-20T11:04:34.438Z">
 <meta property="article:author" content="doomer">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201809924.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
@@ -455,95 +443,173 @@
             <div class="container container-unloaded">
                 <main class="main post-page">
     <article class="article-entry">
-        <h2 id="String相关"><a href="#String相关" class="headerlink" title="String相关"></a><strong>String相关</strong></h2><h3 id="为什么不建议的循环中使用-拼接字符串"><a href="#为什么不建议的循环中使用-拼接字符串" class="headerlink" title="为什么不建议的循环中使用+拼接字符串"></a><strong>为什么不建议的循环中使用</strong><code>+</code><strong>拼接字符串</strong></h3><h4 id="的内部实现原理"><a href="#的内部实现原理" class="headerlink" title="+的内部实现原理"></a><code>+</code><strong>的内部实现原理</strong></h4><p>使用<code>+</code>操作字符串时,<code>java</code>在编译时调用<code>StringBuilder</code>的<code>append</code>方法去拼接字符串</p>
+        <h2 id="string相关"><strong>String相关</strong></h2>
+<h3
+id="为什么不建议的循环中使用拼接字符串"><strong>为什么不建议的循环中使用</strong><code>+</code><strong>拼接字符串</strong></h3>
+<h4
+id="的内部实现原理"><code>+</code><strong>的内部实现原理</strong></h4>
+<p>使用<code>+</code>操作字符串时,<code>java</code>在编译时调用<code>StringBuilder</code>的<code>append</code>方法去拼接字符串</p>
 <p>实现如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str = new StringBuilder(str).append(&quot;text&quot;).toString();</span><br></pre></td></tr></table></figure>
-
-<p>如果在循环中使用则会在每次循环中创建<code>StringBuilder</code>对象, 造成性能和内存的损失, 而如果在循环创建<code>StirngBuilder</code>对象然后再循环中调用<code>append</code>方法这可以避免该问题</p>
+<p>如果在循环中使用则会在每次循环中创建<code>StringBuilder</code>对象,
+造成性能和内存的损失,
+而如果在循环创建<code>StirngBuilder</code>对象然后再循环中调用<code>append</code>方法这可以避免该问题</p>
 <p>以100000次循环为例:</p>
 <p>使用<code>+</code>拼接字符串</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    int count = 100000;</span><br><span class="line">    String str = &quot;&quot;;</span><br><span class="line">    long start = System.currentTimeMillis();</span><br><span class="line">    for (int i = 0; i &lt; count; i++) &#123;</span><br><span class="line">        str = str + i;</span><br><span class="line">    &#125;</span><br><span class="line">    long end = System.currentTimeMillis() - start;</span><br><span class="line">    System.out.println(&quot;String: &quot; + end + &quot; ms&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果:</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201809924.png" alt="img"></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201809924.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>使用StringBuilder:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> public static void main(String[] args) &#123;</span><br><span class="line">        int count = 100000;</span><br><span class="line">        StringBuilder sb = new StringBuilder();</span><br><span class="line">        long start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; count; i++) &#123;</span><br><span class="line">            sb.append(i);</span><br><span class="line">        &#125;</span><br><span class="line">        long end = System.currentTimeMillis() - start;</span><br><span class="line">        System.out.println(&quot;String: &quot; + end + &quot; ms&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果:</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201650175.png" alt="img"></p>
-<h5 id="相关-为什么String不可变"><a href="#相关-为什么String不可变" class="headerlink" title="相关, 为什么String不可变"></a><strong>相关, 为什么String不可变</strong></h5><p>打开String原码可以发现<img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206205550646.png" alt="image-20241206205550646"></p>
-<p>java使用byte数组存储字符串(java9 之前使用char数组), 可以看到<strong>value</strong>被<strong>final</strong>修饰, 这代表<strong>value</strong>的值不可改变,</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206201650175.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h5 id="相关-为什么string不可变"><strong>相关,
+为什么String不可变</strong></h5>
+<p>打开String原码可以发现<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241206205550646.png"
+alt="image-20241206205550646" /></p>
+<p>java使用byte数组存储字符串(java9 之前使用char数组),
+可以看到<strong>value</strong>被<strong>final</strong>修饰,
+这代表<strong>value</strong>的值不可改变,</p>
 <p>但注意, 这并不代表这是String不可改变的原因, 我们有如下代码:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    final int[] value = &#123;1, 2, 3, 4&#125;;</span><br><span class="line">    int[] another = &#123;1, 3, 4, 8&#125;;</span><br><span class="line">//        value = another; //  报错, final不可变</span><br><span class="line">    System.out.println(Arrays.toString(value));</span><br><span class="line">    value[1] = 3; // value[1]发生改变, 但value并未发生, 即value指向的位置并未发生改变</span><br><span class="line">    System.out.println(Arrays.toString(value));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>被final修饰的数组value其值不可改变, 仅仅值value指向的地址不发生改变, 但是存储在堆中的数组的内容确实可以发生更改的, 这意味着如果我们可以直接修改String中 <code>value</code>数组中某个所以位置的值, 进而影响字符串的内容;</p>
-<p>所以, <code>String</code>不可变的原因应该是, <code>value</code>同时被<code>private</code>和<code>final</code>修饰, 这保证了<code>value</code>的内容不会被外界改变, 同时, <code>String</code> 被<code>final</code>修饰, 这保证了不会通过子类的改变value的值</p>
-<h2 id="Object相关"><a href="#Object相关" class="headerlink" title="Object相关"></a>Object相关</h2><h3 id="equals和-的区别"><a href="#equals和-的区别" class="headerlink" title="equals和==的区别"></a><code>equals和==</code><strong>的区别</strong></h3><ol>
+<p>被final修饰的数组value其值不可改变, 仅仅值value指向的地址不发生改变,
+但是存储在堆中的数组的内容确实可以发生更改的,
+这意味着如果我们可以直接修改String中
+<code>value</code>数组中某个所以位置的值, 进而影响字符串的内容;</p>
+<p>所以, <code>String</code>不可变的原因应该是,
+<code>value</code>同时被<code>private</code>和<code>final</code>修饰,
+这保证了<code>value</code>的内容不会被外界改变, 同时,
+<code>String</code> 被<code>final</code>修饰,
+这保证了不会通过子类的改变value的值</p>
+<h2 id="object相关">Object相关</h2>
+<h3
+id="equals和的区别"><code>equals和==</code><strong>的区别</strong></h3>
+<ol type="1">
 <li><p><code>==</code>对于基本数据类型是比较值是否相等，相等为true，反之为false</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1;</span><br><span class="line">int b = 1;</span><br><span class="line">System.out.println(a == b);</span><br></pre></td></tr></table></figure>
-
 <p>输出：</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208154551284.png" alt="image-20241208154551284"></p>
-<p>对于引用数据类型，&#x3D;&#x3D;比较的则是二者的地址值，相同为true</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208154551284.png"
+alt="image-20241208154551284" />
+<figcaption aria-hidden="true">image-20241208154551284</figcaption>
+</figure>
+<p>对于引用数据类型，==比较的则是二者的地址值，相同为true</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str1 = new String(&quot;hello&quot;);</span><br><span class="line">String str2 = new String(&quot;hello&quot;);</span><br><span class="line">System.out.println(str1 == str2);</span><br></pre></td></tr></table></figure>
-
 <p>输出：</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208155114707.png" alt="image-20241208155114707"></p>
-</li>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208155114707.png"
+alt="image-20241208155114707" />
+<figcaption aria-hidden="true">image-20241208155114707</figcaption>
+</figure></li>
 <li><p>equals使用Object提供的一个方法，其源码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean equals(Object obj) &#123;</span><br><span class="line">    return (this == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，如果我们为重写equals方法，则其实现的内部机制是&#x3D;&#x3D;，即比较地址值。</p>
-<p>所以，一般情况下我们会重写equals方法来达到比较对象的内容是否相等的功能；但需要注意的是，equals方法的具体功能最终还是要看其内部实现逻辑。</p>
-</li>
+<p>可以看到，如果我们为重写equals方法，则其实现的内部机制是==，即比较地址值。</p>
+<p>所以，一般情况下我们会重写equals方法来达到比较对象的内容是否相等的功能；但需要注意的是，equals方法的具体功能最终还是要看其内部实现逻辑。</p></li>
 <li><p>特殊情况</p>
 <p>对于字符串对象，由于存在字符串常量池的情况，如果是使用字面量创建对象，则会指向内存中相同的位置。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str1 = &quot;hello&quot;;  // 直接使用字面量，会被存储在字符串常量池中</span><br><span class="line">String str2 = &quot;hello&quot;;  // 引用同一个常量池中的对象</span><br><span class="line">System.out.println(str1 == str2);  // 输出 true，因为它们指向同一个对象</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208160255652.png" alt="image-20241208160255652"></p>
-<p>对于包装类对象，如果值的范围在包装类缓存值的范围内，那么也会指向内存中同一个地址位置。</p>
-</li>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208160255652.png"
+alt="image-20241208160255652" />
+<figcaption aria-hidden="true">image-20241208160255652</figcaption>
+</figure>
+<p>对于包装类对象，如果值的范围在包装类缓存值的范围内，那么也会指向内存中同一个地址位置。</p></li>
 </ol>
-<h3 id="重载和重写的区别"><a href="#重载和重写的区别" class="headerlink" title="重载和重写的区别"></a><strong>重载和重写的区别</strong></h3><ol>
-<li><p>重写(Override): 指子类定义了一个与其父类中具有相同名称、参数列表和返回类型的方法，并且子类方法的实现覆盖了父类方法的实现。 <strong>注意事项</strong>：</p>
+<h3 id="重载和重写的区别"><strong>重载和重写的区别</strong></h3>
+<ol type="1">
+<li><p>重写(Override):
+指子类定义了一个与其父类中具有相同名称、参数列表和返回类型的方法，并且子类方法的实现覆盖了父类方法的实现。
+<strong>注意事项</strong>：</p>
 <ul>
 <li>重写的方法不能抛出新的检查异常或者子类不能抛出比重写的方法更加宽泛的异常；</li>
-<li>重写的方法可以抛出任何运行时异常；<ul>
+<li>重写的方法可以抛出任何运行时异常；
+<ul>
 <li>重写的方法的访问权限不能比被重写的方法的访问权限更低；</li>
-</ul>
-</li>
+</ul></li>
 <li>重写的方法返回值可以与被重写的方法不同，但必须是被重写的方法返回值的派生类。</li>
-</ul>
-</li>
-<li><p>重载(Overload): <strong>同一个类中或继承关系</strong>中的父类与子类中，方法名相同但参数列表不同的情况。</p>
+</ul></li>
+<li><p>重载(Overload):
+<strong>同一个类中或继承关系</strong>中的父类与子类中，方法名相同但参数列表不同的情况。</p>
 <p><strong>注意事项</strong>：</p>
 <ul>
 <li>返回值不同不算重载；</li>
 <li>重载方法可以改变访问修饰符；</li>
 <li>重载方法可以抛出新的或者更加宽泛的异常；</li>
 <li>被重载的方法必须改变参数列表</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h2 id="Integer"><a href="#Integer" class="headerlink" title="Integer"></a><strong>Integer</strong></h2><h3 id="integer的缓存机制"><a href="#integer的缓存机制" class="headerlink" title="integer的缓存机制"></a><strong>integer的缓存机制</strong></h3><p>我们可以通过一下代码判断java是否存在缓存机制：</p>
+<h2 id="integer"><strong>Integer</strong></h2>
+<h3 id="integer的缓存机制"><strong>integer的缓存机制</strong></h3>
+<p>我们可以通过一下代码判断java是否存在缓存机制：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    Integer i = 128;</span><br><span class="line">    Integer i1 = 128;</span><br><span class="line">    System.out.println(i == i1); // false</span><br><span class="line">    System.out.println(i.equals(i1)); //false</span><br><span class="line">    i = 128;</span><br><span class="line">    i1 = 128;</span><br><span class="line">    System.out.println(i == i1); // true</span><br><span class="line">    System.out.println(i.equals(i1)); //true</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>输出：</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208150145484.png" alt="image-20241208150145484"></p>
-<p>Integer的缓存是从java5引用的一个有助于节省内存、提高性能的特性， 在jvm初始化的时候会将[-128, 128)区间的数字存入内存， 如果初始化的integer对象的内容处在这个区间之间则不会新建对象，而是从内存中直接取出。</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208145738908.png" alt="image-20241208145738908"></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208150145484.png"
+alt="image-20241208150145484" />
+<figcaption aria-hidden="true">image-20241208150145484</figcaption>
+</figure>
+<p>Integer的缓存是从java5引用的一个有助于节省内存、提高性能的特性，
+在jvm初始化的时候会将[-128, 128)区间的数字存入内存，
+如果初始化的integer对象的内容处在这个区间之间则不会新建对象，而是从内存中直接取出。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241208145738908.png"
+alt="image-20241208145738908" />
+<figcaption aria-hidden="true">image-20241208145738908</figcaption>
+</figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Cache to support the object identity semantics of autoboxing for values between</span><br><span class="line"> * -128 and 127 (inclusive) as required by JLS.</span><br><span class="line"> *</span><br><span class="line"> * The cache is initialized on first usage.  The size of the cache</span><br><span class="line">     * may be controlled by the &#123;@code -XX:AutoBoxCacheMax=&lt;size&gt;&#125; option.</span><br><span class="line"> * During VM initialization, java.lang.Integer.IntegerCache.high property</span><br><span class="line"> * may be set and saved in the private system properties in the</span><br><span class="line"> * sun.misc.VM class.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">private static class IntegerCache &#123;</span><br><span class="line">    static final int low = -128;</span><br><span class="line">    static final int high;</span><br><span class="line">    static final Integer cache[];</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        // high value may be configured by property</span><br><span class="line">        int h = 127;</span><br><span class="line">        String integerCacheHighPropValue =</span><br><span class="line">            sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);</span><br><span class="line">        if (integerCacheHighPropValue != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                int i = parseInt(integerCacheHighPropValue);</span><br><span class="line">                i = Math.max(i, 127);</span><br><span class="line">                // Maximum array size is Integer.MAX_VALUE</span><br><span class="line">                h = Math.min(i, Integer.MAX_VALUE - (-low) -1);</span><br><span class="line">            &#125; catch( NumberFormatException nfe) &#123;</span><br><span class="line">                // If the property cannot be parsed into an int, ignore it.</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        cache = new Integer[(high - low) + 1];</span><br><span class="line">        int j = low;</span><br><span class="line">        for(int k = 0; k &lt; cache.length; k++)</span><br><span class="line">            cache[k] = new Integer(j++);</span><br><span class="line"></span><br><span class="line">        // range [-128, 127] must be interned (JLS7 5.1.7)</span><br><span class="line">        assert IntegerCache.high &gt;= 127;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private IntegerCache() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过javadoc可知， 我们可以通过<code>AutoBoxCacheMax==size</code>参数来指定初始化最大值的范围。</p>
+<p>通过javadoc可知，
+我们可以通过<code>AutoBoxCacheMax==size</code>参数来指定初始化最大值的范围。</p>
 <blockquote>
-<p>此机制还存在与Byte、Long、Short、Character， 对于前三者其缓存区间与Integer相同()，而后者缓存范围在[0, 127] (ASCII码的取值范围)。</p>
+<p>此机制还存在与Byte、Long、Short、Character，
+对于前三者其缓存区间与Integer相同()，而后者缓存范围在[0, 127]
+(ASCII码的取值范围)。</p>
 </blockquote>
-<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><h3 id="普通IO和BufferedIO有速度差距的原因"><a href="#普通IO和BufferedIO有速度差距的原因" class="headerlink" title="普通IO和BufferedIO有速度差距的原因"></a>普通IO和BufferedIO有速度差距的原因</h3><p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/0ffabbf8654d67bbc092417c98a772b.png" alt="0ffabbf8654d67bbc092417c98a772b"></p>
-<p>虽然使用普通io时指定了Byte数组的大小, 但是普通io的底层仍然是按照一个一个字节读取的</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/dabe5c9b66df0ab5e0182ad0dca4e03.png" alt="dabe5c9b66df0ab5e0182ad0dca4e03"></p>
-<p>使用<code>bufferedio</code>时, 会从文件中读取较大的数据块到缓冲区, 减少磁盘的io次数, 从而加快文件的读取写入速度</p>
-<p><img src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241217204404282.png" alt="image-20241217204404282"></p>
-<h3 id="为什么字节流能够读取所有文件还要设计出字节流"><a href="#为什么字节流能够读取所有文件还要设计出字节流" class="headerlink" title="为什么字节流能够读取所有文件还要设计出字节流"></a>为什么字节流能够读取所有文件还要设计出字节流</h3><p>为了解决unicode的读取问题</p>
+<h2 id="io">IO</h2>
+<h3
+id="普通io和bufferedio有速度差距的原因">普通IO和BufferedIO有速度差距的原因</h3>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/0ffabbf8654d67bbc092417c98a772b.png"
+alt="0ffabbf8654d67bbc092417c98a772b" />
+<figcaption
+aria-hidden="true">0ffabbf8654d67bbc092417c98a772b</figcaption>
+</figure>
+<p>虽然使用普通io时指定了Byte数组的大小,
+但是普通io的底层仍然是按照一个一个字节读取的</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/dabe5c9b66df0ab5e0182ad0dca4e03.png"
+alt="dabe5c9b66df0ab5e0182ad0dca4e03" />
+<figcaption
+aria-hidden="true">dabe5c9b66df0ab5e0182ad0dca4e03</figcaption>
+</figure>
+<p>使用<code>bufferedio</code>时, 会从文件中读取较大的数据块到缓冲区,
+减少磁盘的io次数, 从而加快文件的读取写入速度</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/luobai0110/blogpic/main/image-20241217204404282.png"
+alt="image-20241217204404282" />
+<figcaption aria-hidden="true">image-20241217204404282</figcaption>
+</figure>
+<h3
+id="为什么字节流能够读取所有文件还要设计出字节流">为什么字节流能够读取所有文件还要设计出字节流</h3>
+<p>为了解决unicode的读取问题</p>
 
     </article>
     <!-- license -->
@@ -612,7 +678,8 @@
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#String%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">String相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%BD%BF%E7%94%A8-%E6%8B%BC%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.1.</span> <span class="toc-text">为什么不建议的循环中使用+拼接字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9A%84%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.1.</span> <span class="toc-text">+的内部实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3-%E4%B8%BA%E4%BB%80%E4%B9%88String%E4%B8%8D%E5%8F%AF%E5%8F%98"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">相关, 为什么String不可变</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">Object相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#equals%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">equals和&#x3D;&#x3D;的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E5%92%8C%E9%87%8D%E5%86%99%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">重载和重写的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Integer"><span class="toc-number">3.</span> <span class="toc-text">Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#integer%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="toc-number">3.1.</span> <span class="toc-text">integer的缓存机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO"><span class="toc-number">4.</span> <span class="toc-text">IO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9AIO%E5%92%8CBufferedIO%E6%9C%89%E9%80%9F%E5%BA%A6%E5%B7%AE%E8%B7%9D%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">4.1.</span> <span class="toc-text">普通IO和BufferedIO有速度差距的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%97%E8%8A%82%E6%B5%81%E8%83%BD%E5%A4%9F%E8%AF%BB%E5%8F%96%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E8%BF%98%E8%A6%81%E8%AE%BE%E8%AE%A1%E5%87%BA%E5%AD%97%E8%8A%82%E6%B5%81"><span class="toc-number">4.2.</span> <span class="toc-text">为什么字节流能够读取所有文件还要设计出字节流</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#string%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">String相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%8B%BC%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.1.</span> <span class="toc-text">为什么不建议的循环中使用+拼接字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9A%84%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.1.</span> <span class="toc-text">+的内部实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3-%E4%B8%BA%E4%BB%80%E4%B9%88string%E4%B8%8D%E5%8F%AF%E5%8F%98"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">相关,
+为什么String不可变</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">Object相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#equals%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">equals和&#x3D;&#x3D;的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E5%92%8C%E9%87%8D%E5%86%99%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">重载和重写的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#integer"><span class="toc-number">3.</span> <span class="toc-text">Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#integer%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="toc-number">3.1.</span> <span class="toc-text">integer的缓存机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#io"><span class="toc-number">4.</span> <span class="toc-text">IO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9Aio%E5%92%8Cbufferedio%E6%9C%89%E9%80%9F%E5%BA%A6%E5%B7%AE%E8%B7%9D%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">4.1.</span> <span class="toc-text">普通IO和BufferedIO有速度差距的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%97%E8%8A%82%E6%B5%81%E8%83%BD%E5%A4%9F%E8%AF%BB%E5%8F%96%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E8%BF%98%E8%A6%81%E8%AE%BE%E8%AE%A1%E5%87%BA%E5%AD%97%E8%8A%82%E6%B5%81"><span class="toc-number">4.2.</span> <span class="toc-text">为什么字节流能够读取所有文件还要设计出字节流</span></a></li></ol></li></ol>
             </div>
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">

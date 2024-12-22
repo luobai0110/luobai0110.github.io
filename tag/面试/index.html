@@ -403,14 +403,18 @@
                 <span class="abstract-title-text">java基础面试一</span>
             </a>
             <div class="abstract-content">
-                String相关为什么不建议的循环中使用+拼接字符串+的内部实现原理使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串
+                String相关
+为什么不建议的循环中使用+拼接字符串
++的内部实现原理
+使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串
 实现如下：
 1str = new StringBuilder(str).append(&quot;text&quot;).toString();
-
-如果在循环中使用则会在每次循环中创建StringBuilder对象, 造成性能和内存的损失, 而如果在循环创建StirngBuilder对象然后再循环中调用append方法这可以避免该问题
+如果在循环中使用则会在每次循环中创建StringBuilder对象,
+造成性能和内存的损失,
+而如果在循环创建StirngBuilder对象然后再循环中调用append方法这可以避免该问题
 以100000次循环为例:
 使用+拼接字符串
-12345678910public stat...
+123456789...
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">

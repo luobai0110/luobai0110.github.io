@@ -411,6 +411,7 @@
             </a>
             <div class="abstract-content">
                 
+
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">
@@ -432,17 +433,35 @@
                 <span class="abstract-title-text">java多线程</span>
             </a>
             <div class="abstract-content">
-                调用run方法和调用start方法的区别
+                待办列表
+
+java中的常见锁
+synchronized的使用
+了解threadFactory
+
+多线程的应用场景
+
+大量数据需要处理
+程序需要异步执行
+
+进程与线程的区别
+
+进程:
+进程是操作系统进行资源分配和调度的最小单元，可以简单地理解为系统中运行的一个程序就是一个进程。
+线程: cpu能够调度的最小单元, 进程中的一个个执行流程。
+
+java的多线程
+调用run方法和调用start方法的区别
+
 调用start的方法会创建一个新的线程, 然后os会调用run方法
 调用run方法只是普通的调用方法, 并不会创建一个新的线程
 
-线程的执行顺序线程的执行顺序与调用start的位置无关, 只和os的调度有关
-12345678910111213141516171819202122public class TestMyThread &#123;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 10; i++) &#123;          ...
+线程的执行顺...
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">
                 <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/12/20">
+                <div class="abstract-date" title="Last updated: 2024/12/22">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/12/20</span>
                 </div>
                 <!-- tags -->
@@ -459,11 +478,22 @@
                 <span class="abstract-title-text">炸鸡</span>
             </a>
             <div class="abstract-content">
-                数组相关为什么数组的索引通常从0开始因为索引实际上表示偏移量, 从0开始能够很好的反应数组元素和数组第一个元素的偏移量
+                数组相关
+为什么数组的索引通常从0开始
+因为索引实际上表示偏移量,
+从0开始能够很好的反应数组元素和数组第一个元素的偏移量
 ASCII码表
 
-补码, 原码, 补码UUID生成方式12// 根据时间戳生成String id = UUID.randomUUID().toString();
 
+img
+
+
+
+img
+
+补码, 原码, 补码
+UUID生成方式
+12// 根据时间戳生成String id = UUID.randomUUID().toString();
 
             </div>
             <!-- read more -->
@@ -487,9 +517,15 @@ ASCII码表
                 <span class="abstract-title-text">简单排序算法</span>
             </a>
             <div class="abstract-content">
-                简单算法排序算法冒泡排序原理基于重复遍历待排序的元素，比较相邻的元素并交换它们的位置，直到整个序列有序。通过不断将较大的元素“冒泡”到序列的末端，直到所有元素都按顺序排列。时间复杂度为O(n2)，空间复杂度O(1)
+                简单算法
+排序算法
+冒泡排序
+原理
+基于重复遍历待排序的元素，比较相邻的元素并交换它们的位置，直到整个序列有序。通过不断将较大的元素“冒泡”到序列的末端，直到所有元素都按顺序排列。时间复杂度为O(n2)，空间复杂度O(1)
 演示
-代码123456789101112131415161718public static void bubbleSort(int[] arr) &#123;    if (arr == null || arr.length &lt;= 1) &#123;        return;    &#125;    // 外层循环, 迭代次数为数组的长度    for (int ...
+
+代码
+123456789101112131415161718public static void bubbleSort(int[] arr) &#123;    if (arr == null || arr.length &lt;= 1) &#123;        return;    &#125;    // 外层循环, 迭代次数为数组的长...
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">
@@ -512,14 +548,18 @@ ASCII码表
                 <span class="abstract-title-text">java基础面试一</span>
             </a>
             <div class="abstract-content">
-                String相关为什么不建议的循环中使用+拼接字符串+的内部实现原理使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串
+                String相关
+为什么不建议的循环中使用+拼接字符串
++的内部实现原理
+使用+操作字符串时,java在编译时调用StringBuilder的append方法去拼接字符串
 实现如下：
 1str = new StringBuilder(str).append(&quot;text&quot;).toString();
-
-如果在循环中使用则会在每次循环中创建StringBuilder对象, 造成性能和内存的损失, 而如果在循环创建StirngBuilder对象然后再循环中调用append方法这可以避免该问题
+如果在循环中使用则会在每次循环中创建StringBuilder对象,
+造成性能和内存的损失,
+而如果在循环创建StirngBuilder对象然后再循环中调用append方法这可以避免该问题
 以100000次循环为例:
 使用+拼接字符串
-12345678910public stat...
+123456789...
             </div>
             <!-- read more -->
             <div class="abstract-post-meta">
