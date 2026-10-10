@@ -12,8 +12,9 @@ title: My New Hugo Project
 theme: ["PaperMod"]
 
 # --- 语言 ---------------------------------------------------------------
-# 注意：`locale` 不是 Hugo 的合法配置项（Node/其它工具才有），已替换为下面两项。
-languageCode: zh-cn
+# `locale` 是 Hugo 0.158.0+ 的写法；旧的 `languageCode` 已被废弃
+# （Hugo 会报 "deprecated: project config key languageCode" 警告）。
+locale: zh-cn
 defaultContentLanguage: zh-cn
 # 中英文混排时按「字」而不是按「词」计算阅读时间、摘要等。
 hasCJKLanguage: true
