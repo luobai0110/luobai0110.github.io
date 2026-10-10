@@ -1,0 +1,25 @@
+{{- /*
+  站点级覆盖：在正文之后、页脚之前显示文章的分类。
+
+  为什么需要它：PaperMod 的 layouts/single.html 只渲染 tags（post-footer 里的
+  post-tags 列表），完全不渲染 categories —— 分类页 /categories/ 是能用的，
+  但文章里看不到自己属于哪个分类。
+
+  这是主题官方留出的扩展点（主题里同名 partial 的注释写着
+  "Can be overwritten by partial with the same name in the global layouts"），
+  所以覆盖它是受支持的做法，主题更新也不会被冲掉。不需要的话删掉本文件即可。
+
+  颜色用的是 PaperMod 自己的 CSS 变量（--entry/--primary/--secondary），
+  因此在浅色和深色模式下都正常。
+*/ -}}
+{{- $categories := .Language.Params.Taxonomies.category | default "categories" }}
+{{- with $.GetTerms $categories }}
+<div class="post-categories"
+  style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:0 0 1.5rem;font-size:.9rem">
+  <span style="color:var(--secondary)">分类</span>
+  {{- range . }}
+  <a href="{{ .Permalink }}"
+    style="padding:.15rem .6rem;border-radius:4px;background:var(--entry);color:var(--primary);text-decoration:none">{{ .LinkTitle }}</a>
+  {{- end }}
+</div>
+{{- end }}
