@@ -1,6 +1,7 @@
 # =============================================================================
 # Hugo 站点配置
-# 部署方式：GitHub Actions 构建 -> GitHub Pages（自定义域名）
+# 主题：PaperMod —— https://github.com/adityatelange/hugo-PaperMod
+# 部署：GitHub Actions 构建 -> GitHub Pages（自定义域名）
 # 仓库：https://github.com/luobai0110/luobai0110.github.io
 # =============================================================================
 
@@ -18,6 +19,19 @@ locale: zh-cn
 defaultContentLanguage: zh-cn
 # 中英文混排时按「字」而不是按「词」计算阅读时间、摘要等。
 hasCJKLanguage: true
+
+# --- 分类与标签（taxonomy） ----------------------------------------------
+# 这两行是 Hugo 的默认值，显式写出来便于日后调整（例如把 tag 的链接改成 /topic/）。
+# 配好之后 Hugo 会自动生成这些页面，不需要手写模板，且自带 RSS：
+#   /categories/          所有分类的汇总（带每个分类的文章数）
+#   /categories/某分类/    该分类下的文章列表
+#   /tags/、/tags/某标签/  同理
+# 用法 —— 在文章的 front matter 里写：
+#   categories: ["随笔"]
+#   tags: ["Hugo", "建站"]
+taxonomies:
+  category: categories
+  tag: tags
 
 # --- 构建输出 ------------------------------------------------------------
 # 生成 robots.txt（主题自带模板）与 sitemap.xml，便于搜索引擎收录。
@@ -56,6 +70,37 @@ markup:
     lineNos: true
     guessSyntax: true
 
+# --- 导航菜单 ------------------------------------------------------------
+# 菜单指向的页面来自这几处：
+#   /posts/        content/posts/_index.md（section 首页）
+#   /archives/     content/archives.md   （layout: archives）
+#   /search/       content/search.md     （layout: search）
+#   /categories/   taxonomy 自动生成
+#   /tags/         taxonomy 自动生成
+# weight 越小越靠左。
+menu:
+  main:
+    - identifier: posts
+      name: 文章
+      url: /posts/
+      weight: 10
+    - identifier: archives
+      name: 归档
+      url: /archives/
+      weight: 20
+    - identifier: categories
+      name: 分类
+      url: /categories/
+      weight: 30
+    - identifier: tags
+      name: 标签
+      url: /tags/
+      weight: 40
+    - identifier: search
+      name: 搜索
+      url: /search/
+      weight: 50
+
 # --- 站点参数 ------------------------------------------------------------
 params:
   # production 会启用主题的生产环境行为（例如 opengraph 完整输出）。
@@ -68,9 +113,13 @@ params:
   defaultTheme: auto
   disableThemeToggle: false
 
-  # 首页要列出哪些 section 的文章。PaperMod 直接用这个值取首页列表，
-  # 不配置的话首页不会显示任何文章（空列表）。对应 content/posts/ 目录。
+  # 首页要列出哪些 section 的文章。PaperMod 的首页列表和归档页都直接读这个值，
+  # 不配置的话首页/归档会是空列表。对应 content/posts/ 目录。
   mainSections: ["posts"]
+
+  # 归档页是否列出全站所有页面（含非 mainSections 的页面）。
+  # 保持 false —— 否则 /archives/ 和 /search/ 这两个页面自己也会被归档进去。
+  ShowAllPagesInArchive: false
 
   # 文章页显示项
   ShowReadingTime: true
@@ -91,11 +140,34 @@ params:
     Title: "你好 👋"
     Content: "欢迎来到我的站点。"
 
-  # 静态资源指纹（加 hash 后缀，利于缓存）。上线后建议保持 false。
+  # 页脚：版权行默认自动输出 “© 年份 站点标题”。
+  # 想换成自己的声明，用根级 copyright（取消注释并改写）：
+  # copyright: "© 2026 luobai0110，文章采用 CC BY-NC-SA 4.0 许可协议"
+  footer:
+    hideCopyright: false
+    # text: "本站由 Hugo + PaperMod 驱动"   # 追加在版权行后面，支持 Markdown
+
+  # 社交图标：name 必须是主题内置的图标名（见主题 layouts/_partials/svg.html，
+  # 常见的有 github / email / x / bilibili / zhihu / youtube / rss 等）。
+  socialIcons:
+    - name: github
+      url: https://github.com/luobai0110
+    # - name: email
+    #   url: mailto:you@example.com
+
+  # 静态资源指纹（加 hash 后缀，利于缓存）与网站图标。
+  # 图标文件放进 static/ 就会自动生效；不提供的话浏览器每次都会请求这几个文件
+  # 并拿到 404（不影响功能，但控制台会报错），需要的话取消注释：
   assets:
     disableFingerprinting: false
+    # favicon: "favicon.ico"
+    # favicon16x16: "favicon-16x16.png"
+    # favicon32x32: "favicon-32x32.png"
+    # apple_touch_icon: "apple-touch-icon.png"
+    # safari_pinned_tab: "safari-pinned-tab.svg"
+    # theme_color: "#2e2e33"
 
-  # 站内搜索的模糊匹配参数（仅在使用 search 页时生效）
+  # 站内搜索的模糊匹配参数（配合 content/search.md 使用）
   fuseOpts:
     isCaseSensitive: false
     shouldSort: true
@@ -105,22 +177,21 @@ params:
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
 
-# --- 导航菜单 ------------------------------------------------------------
-# PaperMod 默认没有「归档 / 搜索」页面，需要先创建对应内容文件再打开菜单，
-# 否则会出现 404：
-#   content/archives.md -> front matter 加  layout: archives
-#   content/search.md   -> front matter 加  layout: search
-# menu:
-#   main:
-#     - identifier: archives
-#       name: 归档
-#       url: /archives/
-#       weight: 10
-#     - identifier: tags
-#       name: 标签
-#       url: /tags/
-#       weight: 20
-#     - identifier: search
-#       name: 搜索
-#       url: /search/
-#       weight: 30
+  # 头部 logo（默认直接用站点标题）
+  # label:
+  #   text: "首页"
+  #   icon: "logo.png"      # 放在 assets/ 目录下
+  #   iconHeight: 35
+
+  # 文章页日期格式，默认 :date_long（中文下形如 “2026年1月1日”）
+  # DateFormat: "2006-01-02"
+
+  # 文章页右下角的「编辑此页」链接
+  # editPost:
+  #   URL: "https://github.com/luobai0110/luobai0110.github.io/tree/main/content"
+  #   Text: "编辑此页"
+  #   appendFilePath: true
+
+# --- 其他可选 ------------------------------------------------------------
+# 用 git 提交时间为文章最后修改时间（CI 里已用 fetch-depth: 0，可以开启）
+# enableGitInfo: true

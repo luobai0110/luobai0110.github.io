@@ -1,0 +1,9 @@
+---
+title: "搜索"
+layout: "search"
+url: "/search/"
+summary: "search"
+placeholder: "输入关键词，回车搜索…"
+# 搜索页不需要显示日期、阅读时间等元信息
+hideMeta: true
+---
