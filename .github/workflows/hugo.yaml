@@ -1,0 +1,83 @@
+# GitHub Pages 部署流水线
+# 源码留在 main 分支，每次 push 由 Actions 用 Hugo 构建并发布到 Pages。
+# 前置条件（只需做一次）：仓库 Settings -> Pages -> Build and deployment -> Source 选 "GitHub Actions"
+
+name: Build and deploy Hugo site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  # 允许在 Actions 页面手动触发（顺便可临时指定 Hugo 版本）
+  workflow_dispatch:
+    inputs:
+      hugoVersion:
+        description: "Hugo 版本（例如 0.167.0）"
+        required: false
+        default: "0.167.0"
+
+# GITHUB_TOKEN 的最小权限：读代码 + 写 Pages + OIDC 令牌
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只跑一个 Pages 部署；让正在进行的部署跑完，避免线上被中断。
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # 关键：themes/PaperMod 是 git submodule，不拉子模块构建会失败。
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      # 装 Hugo。主题 theme.toml 要求 >= 0.146.0，这里用 0.167.0。
+      # 优先下载 extended 版（标准版的超集，将来启用 SCSS 也不会翻车），失败则回退标准版。
+      - name: Install Hugo CLI
+        env:
+          VERSION: ${{ github.event.inputs.hugoVersion || '0.167.0' }}
+        run: |
+          BASE="https://github.com/gohugoio/hugo/releases/download/v${VERSION}"
+          if ! wget -q -O "${RUNNER_TEMP}/hugo.deb" "${BASE}/hugo_extended_${VERSION}_linux-amd64.deb"; then
+            wget -O "${RUNNER_TEMP}/hugo.deb" "${BASE}/hugo_${VERSION}_linux-amd64.deb"
+          fi
+          sudo dpkg -i "${RUNNER_TEMP}/hugo.deb"
+          hugo version
+
+      # 故意不加 --baseURL：域名以 hugo.yaml 里的 baseURL 为准，避免被 Pages 设置意外覆盖。
+      - name: Build with Hugo
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: hugo --gc --minify --logLevel info
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

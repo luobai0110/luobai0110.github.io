@@ -1,0 +1,11 @@
+# Hugo 构建产物：改由 GitHub Actions 生成，不再提交到仓库
+public/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# 编辑器 / 系统文件
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

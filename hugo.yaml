@@ -1,4 +1,125 @@
-baseURL: https://doomer.dpdns.org
-locale: zh-cn
+# =============================================================================
+# Hugo 站点配置
+# 部署方式：GitHub Actions 构建 -> GitHub Pages（自定义域名）
+# 仓库：https://github.com/luobai0110/luobai0110.github.io
+# =============================================================================
+
+# 站点对外访问地址：自定义域名 + 结尾斜杠。
+# 这里必须和 GitHub Pages 的自定义域名一致，否则线上 CSS/JS/图片会 404。
+baseURL: https://doomer.dpdns.org/
+
 title: My New Hugo Project
 theme: ["PaperMod"]
+
+# --- 语言 ---------------------------------------------------------------
+# 注意：`locale` 不是 Hugo 的合法配置项（Node/其它工具才有），已替换为下面两项。
+languageCode: zh-cn
+defaultContentLanguage: zh-cn
+# 中英文混排时按「字」而不是按「词」计算阅读时间、摘要等。
+hasCJKLanguage: true
+
+# --- 构建输出 ------------------------------------------------------------
+# 生成 robots.txt（主题自带模板）与 sitemap.xml，便于搜索引擎收录。
+enableRobotsTXT: true
+
+# PaperMod 的站内搜索页会读取 /index.json，所以首页需要额外输出 JSON。
+# 若你不需要站内搜索，可以删掉这一段。
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+# 列表分页：每页文章数。Hugo 0.128+ 使用 pagination.pagerSize（旧写法 paginate 已废弃）。
+pagination:
+  pagerSize: 10
+
+# --- Markdown 渲染 -------------------------------------------------------
+markup:
+  goldmark:
+    renderer:
+      # 允许在 Markdown 里直接写 HTML（例如 <div align="center">）。
+      unsafe: true
+    extensions:
+      # 保留 \( \) 与 $$ $$ 原样传递，配合 KaTeX/MathJax 渲染数学公式。
+      # 不写公式的话可以删掉 passthrough。
+      passthrough:
+        enable: true
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          inline: [['\(', '\)']]
+  highlight:
+    # PaperMod 的代码高亮依赖 CSS class，必须为 false（Hugo 默认是 true）。
+    noClasses: false
+    codeFences: true
+    lineNos: true
+    guessSyntax: true
+
+# --- 站点参数 ------------------------------------------------------------
+params:
+  # production 会启用主题的生产环境行为（例如 opengraph 完整输出）。
+  env: production
+  description: "My New Hugo Project"
+  author: luobai0110
+  keywords: [Blog, Hugo, PaperMod]
+
+  # auto = 跟随系统深浅色；也可写 light / dark
+  defaultTheme: auto
+  disableThemeToggle: false
+
+  # 首页要列出哪些 section 的文章。PaperMod 直接用这个值取首页列表，
+  # 不配置的话首页不会显示任何文章（空列表）。对应 content/posts/ 目录。
+  mainSections: ["posts"]
+
+  # 文章页显示项
+  ShowReadingTime: true
+  ShowWordCount: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowToc: true
+  TocOpen: false
+  UseHugoToc: true
+  ShowShareButtons: false
+  ShowCanonicalLink: false
+  ShowRssButtonInSectionTermList: true
+  comments: false
+
+  # 首页顶部的一段自我介绍。不需要可以整段删除。
+  homeInfoParams:
+    Title: "你好 👋"
+    Content: "欢迎来到我的站点。"
+
+  # 静态资源指纹（加 hash 后缀，利于缓存）。上线后建议保持 false。
+  assets:
+    disableFingerprinting: false
+
+  # 站内搜索的模糊匹配参数（仅在使用 search 页时生效）
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+# --- 导航菜单 ------------------------------------------------------------
+# PaperMod 默认没有「归档 / 搜索」页面，需要先创建对应内容文件再打开菜单，
+# 否则会出现 404：
+#   content/archives.md -> front matter 加  layout: archives
+#   content/search.md   -> front matter 加  layout: search
+# menu:
+#   main:
+#     - identifier: archives
+#       name: 归档
+#       url: /archives/
+#       weight: 10
+#     - identifier: tags
+#       name: 标签
+#       url: /tags/
+#       weight: 20
+#     - identifier: search
+#       name: 搜索
+#       url: /search/
+#       weight: 30
