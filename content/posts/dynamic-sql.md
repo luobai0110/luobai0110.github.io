@@ -1,9 +1,9 @@
 ---
-title: "MyBatis 动态 SQL 中固定过滤条件的注意事项"
+title: 'MyBatis 动态 SQL 中固定过滤条件的注意事项'
 date: 2026-10-10
-categories: ["后端开发"]
-tags: ["MyBatis", "SQL", "动态SQL", "Java"]
-description: "MyBatis 的 trim 标签在动态条件全部未命中时，紧跟其后的固定过滤条件会被拼进 JOIN 的 ON 子句，导致软删除数据被查出。记录成因与三种正确写法。"
+categories: ['后端开发']
+tags: ['MyBatis', 'SQL优化', '动态SQL', 'Java']
+description: 'MyBatis 的 trim 标签在动态条件全部未命中时，紧跟其后的固定过滤条件会被拼进 JOIN 的 ON 子句，导致软删除数据被查出。记录成因与三种正确写法。'
 ShowToc: true
 ---
 
